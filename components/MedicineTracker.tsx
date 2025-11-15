@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { inhalersService, medicationLogsService } from '../services/databaseService';
 
 interface Inhaler {
   id: number;
@@ -8,6 +9,7 @@ interface Inhaler {
   refillDate: string;
   expiryDate: string;
   status: string;
+  userId?: string;
 }
 
 interface MedicationLog {
@@ -24,89 +26,117 @@ export const MedicineTracker: React.FC<{ userId?: string }> = ({ userId }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    try {
-      const dbRaw = localStorage.getItem('dbData');
-      const db = dbRaw ? JSON.parse(dbRaw) : {};
-      if (db.inhalers && Array.isArray(db.inhalers)) {
-        setInhalers(db.inhalers);
-      } else {
-        // fallback sample with maxDoses
+    const loadData = async () => {
+      try {
+        if (userId) {
+          // Load user's inhalers from backend
+          const userInhalers = await inhalersService.getInhalersByUserId(userId);
+          if (userInhalers && userInhalers.length > 0) {
+            setInhalers(userInhalers);
+          } else {
+            // Create default inhalers for new users
+            try {
+              const defaultInhaler1 = await inhalersService.createInhaler({
+                userId,
+                name: 'Albuterol (Rescue)',
+                dosesLeft: 85,
+                maxDoses: 120,
+                refillDate: '2025-02-15',
+                expiryDate: '2025-12-31',
+                status: 'good'
+              });
+              const defaultInhaler2 = await inhalersService.createInhaler({
+                userId,
+                name: 'Fluticasone (Maintenance)',
+                dosesLeft: 45,
+                maxDoses: 120,
+                refillDate: '2025-03-10',
+                expiryDate: '2026-01-15',
+                status: 'caution'
+              });
+              setInhalers([defaultInhaler1, defaultInhaler2]);
+            } catch (err) {
+              console.error('Failed to create default inhalers:', err);
+              // Fallback to local state
+              setInhalers([
+                { id: 1, userId, name: 'Albuterol (Rescue)', dosesLeft: 85, maxDoses: 120, refillDate: '2025-02-15', expiryDate: '2025-12-31', status: 'good' },
+                { id: 2, userId, name: 'Fluticasone (Maintenance)', dosesLeft: 45, maxDoses: 120, refillDate: '2025-03-10', expiryDate: '2026-01-15', status: 'caution' },
+              ]);
+            }
+          }
+
+          // Load medication logs
+          const userLogs = await medicationLogsService.getLogsByUserId(userId);
+          setLogs(userLogs || []);
+        }
+      } catch (error) {
+        console.error('Failed to load inhalers/logs', error);
+        // Fallback to sample data if backend is unavailable
         setInhalers([
           { id: 1, name: 'Albuterol (Rescue)', dosesLeft: 85, maxDoses: 120, refillDate: '2025-02-15', expiryDate: '2025-12-31', status: 'good' },
           { id: 2, name: 'Fluticasone (Maintenance)', dosesLeft: 45, maxDoses: 120, refillDate: '2025-03-10', expiryDate: '2026-01-15', status: 'caution' },
         ]);
       }
+    };
+    loadData();
+  }, [userId]);
 
-      if (db.medicationLogs && Array.isArray(db.medicationLogs)) {
-        setLogs(db.medicationLogs);
-      } else {
-        setLogs([]);
-      }
-    } catch (e) {
-      console.error('Failed to load inhalers/logs', e);
-    }
-  }, []);
-
-  const saveDb = (newInhalers: Inhaler[], newLogs: MedicationLog[]) => {
-    try {
-      const dbRaw = localStorage.getItem('dbData');
-      const db = dbRaw ? JSON.parse(dbRaw) : {};
-      db.inhalers = newInhalers;
-      db.medicationLogs = newLogs;
-      localStorage.setItem('dbData', JSON.stringify(db));
-    } catch (e) {
-      console.error('Failed to save medication data', e);
-    }
-  };
-
-  const markDoseTaken = (inhalerId: number) => {
+  const markDoseTaken = async (inhalerId: number) => {
+    if (!userId) return;
+    
     setLoading(true);
-    const now = new Date().toISOString();
-    const newLogs = [
-      ...logs,
-      { id: Date.now().toString(), userId: userId || 'unknown', inhalerId, action: 'taken', timestamp: now },
-    ];
+    try {
+      const now = new Date().toISOString();
+      
+      // Create medication log in backend
+      await medicationLogsService.createLog({
+        userId,
+        inhalerId,
+        action: 'taken',
+        timestamp: now,
+      });
 
-    const newInhalers = inhalers.map(i => {
-      if (i.id === inhalerId) {
-        const updated = { ...i, dosesLeft: Math.max(0, i.dosesLeft - 1) };
-        const max = i.maxDoses ?? 120;
+      // Update inhaler in backend
+      const inhaler = inhalers.find(i => i.id === inhalerId);
+      if (inhaler) {
+        const updated = { ...inhaler, dosesLeft: Math.max(0, inhaler.dosesLeft - 1) };
+        const max = updated.maxDoses ?? 120;
         const pct = (updated.dosesLeft / max) * 100;
         // update status based on percentage
         if (pct <= 10) updated.status = 'critical';
         else if (pct <= 30) updated.status = 'caution';
         else updated.status = 'good';
-        return updated;
+        
+        await inhalersService.updateInhaler(inhalerId, updated);
+        
+        // Update local state
+        setInhalers(inhalers.map(i => i.id === inhalerId ? updated : i));
+        setLogs([...logs, { id: Date.now().toString(), userId, inhalerId, action: 'taken' as const, timestamp: now }]);
       }
-      return i;
-    });
-
-    setInhalers(newInhalers);
-    setLogs(newLogs);
-    saveDb(newInhalers, newLogs);
-
-    // small UX delay
-    setTimeout(() => setLoading(false), 400);
+    } catch (error) {
+      console.error('Failed to mark dose taken', error);
+      alert('Failed to update medication. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const requestRefill = (inhaler: Inhaler) => {
+  const requestRefill = async (inhaler: Inhaler) => {
+    if (!userId) return;
+    
     try {
-      const dbRaw = localStorage.getItem('dbData');
-      const db = dbRaw ? JSON.parse(dbRaw) : {};
-      if (!db.refillRequests) db.refillRequests = [];
-      const req = {
-        id: Date.now().toString(),
-        userId: userId || 'unknown',
+      const { refillRequestsService } = await import('../services/databaseService');
+      await refillRequestsService.createRequest({
+        userId,
         inhalerId: inhaler.id,
         inhalerName: inhaler.name,
         status: 'pending',
         createdAt: new Date().toISOString(),
-      };
-      db.refillRequests.push(req);
-      localStorage.setItem('dbData', JSON.stringify(db));
+      });
       alert(`Refill request submitted for ${inhaler.name}`);
-    } catch (e) {
-      console.error('Failed to request refill', e);
+    } catch (error) {
+      console.error('Failed to request refill', error);
+      alert('Failed to submit refill request. Please try again.');
     }
   };
 

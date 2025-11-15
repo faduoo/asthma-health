@@ -1,11 +1,28 @@
 {
   "name": "asthma-health-backend-visualizer",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Comprehensive asthma management application with health tracking, medication management, and AI assistant",
+  "author": "faduoo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/faduoo/asthma-health.git"
+  },
+  "keywords": [
+    "asthma",
+    "health",
+    "management",
+    "tracker",
+    "medication",
+    "react",
+    "typescript",
+    "vite"
+  ],
   "type": "module",
   "scripts": {
     "start": "vite",
-    "server": "json-server --watch db.json --port 3001",
+    "server": "json-server --watch db.json --port 3001 --host 0.0.0.0",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -17,6 +34,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^9.2.1",
     "json-server": "^1.0.0-beta.3",

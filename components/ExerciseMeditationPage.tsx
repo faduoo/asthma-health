@@ -270,7 +270,8 @@ export const ExerciseMeditationPage: React.FC<ExerciseMeditationPageProps> = ({ 
 
     if (startedSession) {
         const duration = startedSession.item.duration;
-        const instructions = startedSession.item.type === 'breathing' || startedSession.item.type === 'mindfulness' || startedSession.item.type === 'guided' || startedSession.item.type === 'body-scan'
+        const isMeditation = 'type' in startedSession.item;
+        const instructions = isMeditation
             ? (startedSession.item as MeditationSession).instructions
             : (startedSession.item as Exercise).instructions;
 
