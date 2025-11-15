@@ -21,9 +21,10 @@
   ],
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "json-server --watch db.json --port 10000",
+    "dev": "vite",
     "server": "json-server --watch db.json --port 3001 --host 0.0.0.0",
-    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
