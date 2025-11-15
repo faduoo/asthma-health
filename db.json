@@ -1,0 +1,254 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Sarah Johnson",
+      "email": "sarah.johnson@example.com",
+      "phone": "5551234567",
+      "password": "SecurePass123!",
+      "dateOfBirth": "1990-03-15",
+      "gender": "Female",
+      "asthmaType": "Allergic Asthma",
+      "severity": "Moderate",
+      "createdAt": "2025-11-01T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Michael Chen",
+      "email": "michael.chen@example.com",
+      "phone": "5559876543",
+      "password": "Password456@",
+      "dateOfBirth": "1985-07-22",
+      "gender": "Male",
+      "asthmaType": "Exercise-Induced",
+      "severity": "Mild",
+      "createdAt": "2025-11-02T14:15:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Emma Williams",
+      "email": "emma.williams@example.com",
+      "phone": "5552223333",
+      "password": "Emma@Secure789",
+      "dateOfBirth": "1995-12-08",
+      "gender": "Female",
+      "asthmaType": "Occupational Asthma",
+      "severity": "Moderate",
+      "createdAt": "2025-11-03T08:45:00Z"
+    },
+    {
+      "id": "a440",
+      "name": "Akyas",
+      "email": "www.akhyaz12mohamed@gmail.com",
+      "phone": "+919745239380",
+      "password": "12345",
+      "dateOfBirth": "2025-11-27",
+      "gender": "Male",
+      "asthmaType": "Allergic Asthma",
+      "severity": "Moderate",
+      "createdAt": "2025-11-13T15:04:02.275Z"
+    },
+    {
+      "id": "efb9",
+      "name": "faisal",
+      "email": "farhan@gmail.com",
+      "phone": "9045121320",
+      "password": "1234",
+      "dateOfBirth": "2004-04-04",
+      "gender": "Male",
+      "asthmaType": "Exercise-Induced",
+      "severity": "Severe",
+      "createdAt": "2025-11-13T15:51:48.845Z"
+    },
+    {
+      "id": "a475",
+      "name": "arathi",
+      "email": "www.akhyaz12mohamed@gmail.com",
+      "phone": "2457893356",
+      "password": "1234",
+      "dateOfBirth": "2025-11-13",
+      "gender": "Female",
+      "asthmaType": "Allergic Asthma",
+      "severity": "Mild",
+      "createdAt": "2025-11-13T17:13:29.951Z"
+    },
+    {
+      "id": "656b",
+      "name": "Fadi",
+      "email": "fadi123@gmail.com",
+      "phone": "8547952378",
+      "password": "fadi1234",
+      "dateOfBirth": "2005-12-12",
+      "gender": "Male",
+      "asthmaType": "Allergic Asthma",
+      "severity": "Mild",
+      "createdAt": "2025-11-13T19:33:53.191Z"
+    },
+    {
+      "id": "6371",
+      "name": "fadi na",
+      "email": "www.akhyaz12mohamed@gmail.com",
+      "phone": "09745239380",
+      "password": "1234",
+      "dateOfBirth": "9987-01-01",
+      "gender": "Male",
+      "asthmaType": "Seasonal Asthma",
+      "severity": "Mild",
+      "createdAt": "2025-11-13T20:49:36.385Z"
+    },
+    {
+      "id": "343b",
+      "name": "amjad khan",
+      "email": "www.akhyaz12mohamed@gmail.com",
+      "phone": "09745239380",
+      "password": "1234",
+      "dateOfBirth": "1234-03-12",
+      "gender": "Male",
+      "asthmaType": "Allergic Asthma",
+      "severity": "Mild",
+      "createdAt": "2025-11-14T00:21:45.842Z"
+    },
+    {
+      "id": "3ac1",
+      "name": "mufeed",
+      "email": "mufeed563@gmail.com",
+      "phone": "8075111490",
+      "password": "1234",
+      "dateOfBirth": "2005-04-05",
+      "gender": "Male",
+      "asthmaType": "Seasonal Asthma",
+      "severity": "Moderate",
+      "createdAt": "2025-11-14T05:12:13.552Z"
+    },
+    {
+      "id": "bc95",
+      "name": "mufeed",
+      "email": "hi@gmail.com",
+      "phone": "09745239380",
+      "password": "1234",
+      "dateOfBirth": "2005-11-04",
+      "gender": "Male",
+      "asthmaType": "Exercise-Induced",
+      "severity": "Mild",
+      "createdAt": "2025-11-14T05:59:01.809Z"
+    },
+    {
+      "id": "feb6",
+      "name": "mufeed",
+      "email": "hi@gmail.com",
+      "phone": "8075111490",
+      "password": "1234",
+      "dateOfBirth": "2005-12-29",
+      "gender": "Male",
+      "asthmaType": "Exercise-Induced",
+      "severity": "Moderate",
+      "createdAt": "2025-11-14T06:45:56.003Z"
+    },
+    {
+      "id": "12f9",
+      "name": "mufeed",
+      "email": "hi@gmail.com",
+      "phone": "8075111490",
+      "password": "1234",
+      "dateOfBirth": "2005-01-20",
+      "gender": "Male",
+      "asthmaType": "Occupational Asthma",
+      "severity": "Moderate",
+      "createdAt": "2025-11-14T08:37:15.702Z"
+    }
+  ],
+  "dailyLogs": [
+    {
+      "id": "1",
+      "userId": 1,
+      "date": "2025-11-12",
+      "peakFlow": 420,
+      "symptoms": "Mild cough",
+      "triggers": [
+        "Pollen",
+        "Dust"
+      ],
+      "medicineUsed": [
+        "Albuterol"
+      ],
+      "notes": "Good day overall",
+      "createdAt": "2025-11-12T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "date": "2025-11-11",
+      "peakFlow": 400,
+      "symptoms": "No symptoms",
+      "triggers": [],
+      "medicineUsed": [],
+      "notes": "Excellent day",
+      "createdAt": "2025-11-11T20:30:00Z"
+    },
+    {
+      "id": "3",
+      "userId": 2,
+      "date": "2025-11-12",
+      "peakFlow": 480,
+      "symptoms": "Shortness of breath after exercise",
+      "triggers": [
+        "Exercise"
+      ],
+      "medicineUsed": [
+        "Albuterol"
+      ],
+      "notes": "Exercised in the morning",
+      "createdAt": "2025-11-12T18:00:00Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "1",
+      "userId": 1,
+      "level": "yellow",
+      "title": "Increased Pollen Count",
+      "description": "High pollen levels detected in your area. Consider using preventive medication.",
+      "createdAt": "2025-11-12T09:00:00Z"
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "level": "green",
+      "title": "Good Air Quality",
+      "description": "Air quality is excellent today. Great day to exercise outdoors!",
+      "createdAt": "2025-11-12T10:00:00Z"
+    }
+  ],
+  "actResults": [
+    {
+      "id": "act-1731520200000",
+      "userId": "a440",
+      "score": 22,
+      "answers": [
+        4,
+        4,
+        4,
+        5,
+        5
+      ],
+      "controlLevel": "Well Controlled",
+      "date": "2025-11-14T10:30:00Z",
+      "createdAt": "2025-11-14T10:30:00Z"
+    }
+  ],
+  "dailySymptomsLog": [
+    {
+      "id": "symptom-1731520200001",
+      "userId": "a440",
+      "date": "2025-11-14",
+      "daytimeSymptoms": [
+        "shortness-of-breath"
+      ],
+      "nighttimeSymptoms": [
+        "woke-up-asthma"
+      ],
+      "rescueInhalerUses": 2,
+      "createdAt": "2025-11-14T08:00:00Z"
+    }
+  ]
+}

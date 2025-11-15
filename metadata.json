@@ -1,0 +1,5 @@
+{
+  "name": "Asthma Health Backend Visualizer",
+  "description": "An interactive web application that visualizes and explains the backend architecture for the 'ASTHMA HEALTH' platform, including API endpoints, tech stack, and an interactive AI chatbot demonstration.",
+  "requestFramePermissions": []
+}
