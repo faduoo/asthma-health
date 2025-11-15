@@ -1,6 +1,9 @@
-// Use environment variable for API URL, fallback to localhost for development
+// Render Backend URL
+const API_URL = "https://asthma-health.onrender.com";
+
+// Use environment variable for API URL, fallback to Render backend or localhost for development
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
-                     (import.meta.env.DEV ? 'http://localhost:10000' : '/api');
+                     (import.meta.env.DEV ? 'http://localhost:10000' : API_URL);
 
 // Helper function to handle fetch errors
 const handleFetchError = async (response: Response, errorMessage: string) => {
